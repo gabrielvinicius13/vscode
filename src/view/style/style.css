@@ -2,6 +2,7 @@
 @import 'normalize.css';
 
 @import '@milkdown/crepe/theme/common/style.css';
+@import '@milkdown/plugin-mermaid-pele/style.css';
 
 @import './theme.css';
 

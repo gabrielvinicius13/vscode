@@ -1,9 +1,9 @@
 /* Copyright 2021, Milkdown by Mirone.*/
-import type { Ctx } from '@milkdown/kit/ctx';
 import { editorViewCtx, serializerCtx } from '@milkdown/kit/core';
-import { vscode } from '../utils/api';
 import type { ClientMessage } from '../utils/client-message';
 import type { Crepe } from '@milkdown/crepe';
+import type { Ctx } from '@milkdown/kit/ctx';
+import { vscode } from '../utils/api';
 
 let prev = '';
 

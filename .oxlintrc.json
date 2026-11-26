@@ -23,9 +23,9 @@
                 "ignoreTypes": true
             }
         ],
-        "import/sort-imports": "error",
+        "eslint/sort-imports": "error",
         "import/no-duplicates": "error",
-        "import/no-import-assign": "error",
+        "eslint/no-import-assign": "error",
         "import/no-self-import": "error",
         "typescript/consistent-type-imports": "error",
         "typescript/no-import-type-side-effects": "error"

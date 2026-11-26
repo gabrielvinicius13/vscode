@@ -1,17 +1,30 @@
-import type { Editor } from '@milkdown/kit/core';
 import { editorViewCtx, editorViewOptionsCtx, parserCtx } from '@milkdown/kit/core';
-import { Slice } from '@milkdown/kit/prose/model';
-import { Crepe } from '@milkdown/crepe';
-import { ClientMessage } from './utils/client-message';
-import { vscode } from './utils/api';
-import { useUploader } from './editor-config/uploader';
-import { useListener } from './editor-config/listener';
 import { vscodeDark, vscodeLight } from '@uiw/codemirror-theme-vscode';
+import { ClientMessage } from './utils/client-message';
+import { Crepe } from '@milkdown/crepe';
+import type { Editor } from '@milkdown/kit/core';
+import type { MilkdownPlugin } from '@milkdown/kit/ctx';
 import { ResourceManager } from './utils/resource-manager';
+import { Slice } from '@milkdown/kit/prose/model';
+import { useListener } from './editor-config/listener';
+import { useUploader } from './editor-config/uploader';
+import { vscode } from './utils/api';
+import { withMermaidPreview } from '@milkdown/plugin-mermaid-pele';
+
+function usesDarkTheme() {
+    const { classList } = document.body;
+    if (classList.contains('vscode-light') || classList.contains('vscode-high-contrast-light')) {
+        return false;
+    }
+    return classList.contains('vscode-dark') || classList.contains('vscode-high-contrast');
+}
 
 export class EditorManager {
     private editor: Editor | null = null;
-    constructor(private message: ClientMessage) {}
+    constructor(
+        private message: ClientMessage,
+        private readonly plugins: MilkdownPlugin | MilkdownPlugin[] = [],
+    ) {}
 
     create = async () => {
         const state = vscode.getState();
@@ -20,7 +33,9 @@ export class EditorManager {
             defaultValue: state?.text || '',
             featureConfigs: {
                 [Crepe.Feature.CodeMirror]: {
-                    theme: document.body.classList.contains('vscode-dark') ? vscodeDark : vscodeLight,
+                    theme: usesDarkTheme() ? vscodeDark : vscodeLight,
+                    renderPreview: withMermaidPreview(),
+                    previewOnlyByDefault: true,
                 },
                 [Crepe.Feature.ImageBlock]: {
                     proxyDomURL: (originalUrl) => {
@@ -58,6 +73,7 @@ export class EditorManager {
         });
         useListener(crepe, this.message);
         const { editor } = crepe;
+        editor.use(this.plugins);
         useUploader(editor, this.message);
 
         await crepe.create();

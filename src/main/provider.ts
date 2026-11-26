@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
+import { getHtmlTemplateForWebView } from './template.html';
 import { join } from 'path';
 import { registerCommand } from './register-command';
-import { getHtmlTemplateForWebView } from './template.html';
 
 export class MilkdownEditorProvider implements vscode.CustomTextEditorProvider {
     public static readonly viewType = 'milkdown.editor';
@@ -33,7 +33,10 @@ export class MilkdownEditorProvider implements vscode.CustomTextEditorProvider {
         document: vscode.TextDocument,
         webviewPanel: vscode.WebviewPanel,
     ): Promise<void> {
-        webviewPanel.webview.options = { enableScripts: true };
+        webviewPanel.webview.options = {
+            enableScripts: true,
+            localResourceRoots: [this.context.extensionUri],
+        };
         webviewPanel.webview.html = MilkdownEditorProvider.getHtmlForWebview(this.context, webviewPanel.webview);
 
         webviewPanel.onDidChangeViewState((e) => {

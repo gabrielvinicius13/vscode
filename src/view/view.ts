@@ -1,10 +1,11 @@
 import { ClientMessage } from './utils/client-message';
 import { EditorManager } from './editor-manager';
 import { ResourceManager } from './utils/resource-manager';
+import { mermaidPele } from '@milkdown/plugin-mermaid-pele';
 
 function main() {
     const message = new ClientMessage();
-    const editor = new EditorManager(message);
+    const editor = new EditorManager(message, mermaidPele);
 
     editor.create();
 
