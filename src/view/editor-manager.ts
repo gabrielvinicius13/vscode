@@ -1,3 +1,4 @@
+import { languages } from '@codemirror/language-data';
 import { editorViewCtx, editorViewOptionsCtx, parserCtx } from '@milkdown/kit/core';
 import { vscodeDark, vscodeLight } from '@uiw/codemirror-theme-vscode';
 import { ClientMessage } from './utils/client-message';
@@ -9,7 +10,7 @@ import { Slice } from '@milkdown/kit/prose/model';
 import { useListener } from './editor-config/listener';
 import { useUploader } from './editor-config/uploader';
 import { vscode } from './utils/api';
-import { withMermaidPreview } from '@milkdown/plugin-mermaid-pele';
+import { withDiagramLanguages, withMermaidPreview } from '@milkdown/plugin-mermaid-pele';
 
 function usesDarkTheme() {
     const { classList } = document.body;
@@ -34,8 +35,15 @@ export class EditorManager {
             featureConfigs: {
                 [Crepe.Feature.CodeMirror]: {
                     theme: usesDarkTheme() ? vscodeDark : vscodeLight,
+                    languages: withDiagramLanguages(languages),
                     renderPreview: withMermaidPreview(),
                     previewOnlyByDefault: true,
+                    searchPlaceholder: 'Buscar linguagem',
+                    noResultText: 'Linguagem não encontrada',
+                    copyText: 'Copiar código',
+                    previewLabel: 'Prévia',
+                    previewToggleText: (previewOnly) =>
+                        previewOnly ? 'Editar código' : 'Ocultar código',
                 },
                 [Crepe.Feature.ImageBlock]: {
                     proxyDomURL: (originalUrl) => {
