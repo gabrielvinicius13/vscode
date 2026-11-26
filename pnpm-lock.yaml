@@ -27,7 +27,7 @@ importers:
         specifier: ^26.6.11
         version: 26.6.11
       '@types/vscode':
-        specifier: ^1.146.0
+        specifier: ^1.74.0
         version: 1.146.0
       '@uiw/codemirror-theme-vscode':
         specifier: ^4.25.13

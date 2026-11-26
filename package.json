@@ -6,7 +6,7 @@
     "description": "Edit markdown in a WYSIWYG way, powered by milkdown.",
     "version": "0.0.20",
     "engines": {
-        "vscode": "^1.146.0"
+        "vscode": "^1.74.0"
     },
     "repository": {
         "type": "git",
@@ -216,7 +216,7 @@
         "@milkdown/plugin-mermaid-pele": "file:../milkdown/packages/plugins/plugin-mermaid-pele",
         "@types/lodash.throttle": "^4.1.9",
         "@types/node": "^26.6.11",
-        "@types/vscode": "^1.146.0",
+        "@types/vscode": "^1.74.0",
         "@uiw/codemirror-theme-vscode": "^4.25.13",
         "@vscode/vsce": "^4.1.1",
         "concurrently": "^10.0.7",
